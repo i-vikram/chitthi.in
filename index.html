@@ -3,47 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chitthi.in - Modern Love Letters with Traditional Soul</title>
+    <title>Chitthi - Modern Love Letters</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Playfair+Display:wght@400;700&display=swap');
+       @import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Playfair+Display:wght@400;700&family=Dancing+Script:wght@700&family=Great+Vibes&family=La+Belle+Aurore&display=swap');
         
         .vintage-text { font-family: 'Playfair Display', serif; }
         .handwriting { font-family: 'Cedarville Cursive', cursive; }
+        .elegant { font-family: 'Great Vibes', cursive; }
+        .romantic { font-family: 'Dancing Script', cursive; }
 
+        .chitthi-font { 
+            font-family: 'La Belle Aurore', cursive;
+            font-size: 4.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        .highlight-effect {
+            position: absolute;
+            bottom: 15%;
+            left: -5%;
+            width: 110%;
+            height: 30%;
+            background: rgba(255,215,0,0.3);
+            transform: rotate(-2deg);
+            z-index: -1;
+            animation: highlight 1.5s ease-out forwards;
+        }
+
+        @keyframes highlight {
+            0% { width: 0; }
+            100% { width: 110%; }
+        }
+
+        .floating-heart {
+            position: absolute;
+            opacity: 0.3;
+            animation: float-animation 8s infinite linear;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes float-animation {
+            0%, 100% { 
+                transform: translateY(0) rotate(0deg) scale(1);
+                opacity: 0.3;
+            }
+            50% { 
+                transform: translateY(-50px) rotate(45deg) scale(1.2);
+                opacity: 0.6;
+            }
+        }
         .parchment-bg {
             background-image: url('data:image/svg+xml,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="3"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.2"/></svg>'),
             linear-gradient(to bottom right, #faf3e0 0%, #f3e5c5 100%);
         }
 
-        @keyframes fold {
-            0% { transform: scale(1); opacity: 1; height: 600px; }
-            100% { transform: scale(0.3); opacity: 0; height: 0; }
+        [contenteditable][placeholder]:empty:before {
+            content: attr(placeholder);
+            color: #6b7280;
+            opacity: 0.6;
         }
 
-        .fold-animation {
-            animation: fold 1s ease-in-out forwards;
-            transform-origin: center;
+        .photo-frame {
+            transform: rotate(3deg);
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+            border: 8px solid white;
+            transition: transform 0.3s ease;
         }
 
-        .petal {
-            animation: drift 8s linear infinite;
-            opacity: 0.7;
-        }
-
-        @keyframes drift {
-            0% { transform: translateY(-10vh) rotate(0deg); }
-            100% { transform: translateY(110vh) rotate(360deg); }
-        }
-
-        .decorative-text {
+        .heart-bg {
             position: absolute;
-            opacity: 0.15;
-            font-weight: 900;
             pointer-events: none;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            z-index: 0;
+            opacity: 0.15;
+            font-size: 12px;
+            z-index: 1;
         }
     </style>
 </head>
@@ -51,28 +86,17 @@
     <!-- Hero Section -->
     <section class="min-h-screen relative overflow-hidden">
         <div class="absolute inset-0 parchment-bg opacity-90"></div>
+        <div id="heroHearts" class="absolute inset-0 pointer-events-none"></div>
         
-        <!-- Rose Petals -->
-        <div class="petal absolute top-0 left-1/4 w-16 h-16" style="animation-delay: 0s">
-            <svg viewBox="0 0 100 100" class="text-rose-300/70">
-                <path fill="currentColor" d="M50 10 Q60 30 70 40 Q80 50 70 60 Q60 70 50 80 Q40 70 30 60 Q20 50 30 40 Q40 30 50 10" />
-            </svg>
-        </div>
-        <div class="petal absolute top-0 right-1/4 w-16 h-16" style="animation-delay: 2s">
-            <svg viewBox="0 0 100 100" class="text-rose-300/70">
-                <path fill="currentColor" d="M50 10 Q60 30 70 40 Q80 50 70 60 Q60 70 50 80 Q40 70 30 60 Q20 50 30 40 Q40 30 50 10" />
-            </svg>
-        </div>
-
-        <!-- Decorative Elements -->
-        <div id="decorativeElements"></div>
-
         <div class="relative z-10 container mx-auto px-4 py-20">
             <div class="max-w-4xl mx-auto text-center">
-                <h1 class="vintage-text text-5xl md:text-6xl font-bold text-rose-800 mb-4">
-                    Chitthi.in
-                </h1>
-                <p class="handwriting text-3xl text-rose-600 mb-6">
+                <div class="mb-6 relative inline-block">
+                    <h1 class="chitthi-font text-rose-800">
+                        Chitthi
+                        <div class="highlight-effect"></div>
+                    </h1>
+                </div>
+                <p class="vintage-text text-5xl md:text-6xl font-bold text-rose-800 mb-4">
                     Ditch Boring Texts. Send a Chitthi That Feels Special!
                 </p>
                 <p class="handwriting text-2xl text-amber-900 mb-8">
@@ -80,13 +104,15 @@
                 </p>
                 <img src="./icons8-letter-58.png" 
                 class="wax-seal w-24 h-24 mx-auto mb-8 opacity-90">
-
                 <button onclick="scrollToEditor()" 
-                        class="bg-rose-800 hover:bg-rose-900 text-white px-8 py-4 rounded-full 
-                               transform transition-all duration-300 hover:scale-105 vintage-text">
-                    Begin Your Love Letter
-                </button>
+                class="bg-rose-800 hover:bg-rose-900 text-white px-8 py-4 rounded-full 
+                transform transition-all duration-300 hover:scale-105 vintage-text">
+                Begin Your Love Letter
+            </button>
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 vintage-text text-amber-700 text-sm opacity-75 hover:opacity-100 transition-opacity"">
+                Crafted with ❤️ by <a href="https://portfolio--gules.vercel.app/" class="border-b border-dashed border-amber-700 hover:text-rose-800" target="_blank">Vikram</a>
             </div>
+        </div>
         </div>
     </section>
 
@@ -104,14 +130,36 @@
                         Add Memory
                     </label>
                 </div>
-                <textarea id="letterContent" 
-                          class="w-full h-[500px] bg-transparent border-none focus:ring-0 
-                                 handwriting text-xl text-amber-900 resize-none"
-                          placeholder="Dearest..."></textarea>
+
+                <!-- Formatting Tools -->
+                <div class="formatting-tools mb-4 flex gap-2 items-center">
+                    <button onclick="formatText('bold')" 
+                            class="px-3 py-1 bg-rose-100 hover:bg-rose-200 rounded-md text-rose-800 font-bold">
+                        B
+                    </button>
+                    <select onchange="formatText('fontName', this.value)" 
+                            class="px-3 py-1 bg-rose-100 rounded-md text-rose-800 border-none focus:ring-0">
+                        <option value="Cedarville Cursive">Handwriting</option>
+                        <option value="Playfair Display">Classic Serif</option>
+                        <option value="Great Vibes">Elegant Script</option>
+                        <option value="Dancing Script">Romantic</option>
+                    </select>
+                    <input type="color" onchange="formatText('foreColor', this.value)" 
+                           class="w-8 h-8 rounded-full border-2 border-rose-200 cursor-pointer">
+                    <button onclick="formatText('foreColor', '#be185d')" 
+                            class="w-8 h-8 rounded-full bg-rose-700 hover:bg-rose-800 border-2 border-rose-200"></button>
+                    <button onclick="formatText('foreColor', '#4169E1')" 
+                            class="w-8 h-8 rounded-full bg-blue-700 hover:bg-blue-800 border-2 border-rose-200"></button>
+                </div>
+
+                <div id="letterContent" contenteditable="true"
+                     class="w-full h-[500px] bg-transparent border-none focus:ring-0 
+                            text-xl text-amber-900 resize-none overflow-auto p-4 handwriting"
+                     placeholder="Dearest..."></div>
                 <div id="imagePreview" class="mt-6 grid grid-cols-2 md:grid-cols-3 gap-6 p-4"></div>
             </div>
 
-            <div class="border-t-2 border-rose-100 p-4 bg-rose-50" id="sealButton">
+            <div class="border-t-2 border-rose-100 p-4 bg-rose-50">
                 <button onclick="saveLetter()" 
                         class="bg-rose-800 text-white px-6 py-3 rounded-lg 
                                hover:bg-rose-900 transition-colors vintage-text">
@@ -145,51 +193,74 @@
     <script>
         let capturedCanvas = null;
 
-        function addDecorativeElements() {
-            const container = document.getElementById('decorativeElements');
-            const positions = [
-                { top: '15%', left: '5%', size: '6rem', text: 'LOVE', color: '#be185d' },
-                { top: '40%', left: '70%', size: '8rem', text: '❤', color: '#fb7185' },
-                { top: '65%', left: '20%', size: '7rem', text: 'LOVE', color: '#be185d' },
-                { top: '80%', left: '60%', size: '9rem', text: '❤', color: '#fb7185' }
-            ];
-
-            positions.forEach(pos => {
-                const elem = document.createElement('div');
-                elem.className = 'decorative-text';
-                elem.style.top = pos.top;
-                elem.style.left = pos.left;
-                elem.style.fontSize = pos.size;
-                elem.style.color = pos.color;
-                elem.style.opacity = pos.text === '❤' ? '0.2' : '0.15';
-                elem.style.rotate = `${Math.random() * 30 - 15}deg`;
-                elem.textContent = pos.text;
-                elem.style.fontFamily = pos.text === '❤' ? 'system-ui' : "'Cedarville Cursive', cursive";
-                container.appendChild(elem);
-            });
-        }
-
+        // Fixed scroll function
         function scrollToEditor() {
-            document.getElementById('editor').classList.remove('hidden');
-            window.scrollTo({
-                top: document.getElementById('editor').offsetTop - 50,
-                behavior: 'smooth'
-            });
+            const editor = document.getElementById('editor');
+            editor.classList.remove('hidden');
+            editor.scrollIntoView({ behavior: 'smooth' });
         }
 
+        // Formatting functions
+        function formatText(command, value) {
+            document.execCommand(command, false, value);
+            document.getElementById('letterContent').focus();
+        }
+               // Add floating hearts to hero section
+               function addHeroHearts() {
+            const container = document.getElementById('heroHearts');
+            const colors = ['#fb7185', '#be185d', '#f59e0b', '#3b82f6'];
+            
+            for(let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerHTML = '❤';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = Math.random() * 100 + '%';
+                heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+                heart.style.fontSize = Math.random() * 20 + 20 + 'px';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(heart);
+            }
+        }
+        addHeroHearts();
+        addDecorativeElements();
+        // Initialize on load
+        window.onload = () => {
+            addDecorativeElements();
+            addHeroHearts();
+        };
+
+        // Heart background generator
+        function addHeartBackground(container) {
+            const heartColors = ['#ff69b4', '#ff1493', '#fb7185', '#be185d', '#4169E1'];
+            for(let i = 0; i < 50; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-bg';
+                heart.innerHTML = '❤';
+                heart.style.left = Math.random() * 95 + '%';
+                heart.style.top = Math.random() * 95 + '%';
+                heart.style.color = heartColors[Math.floor(Math.random() * heartColors.length)];
+                heart.style.transform = `rotate(${Math.random() * 360}deg) scale(${Math.random() * 0.5 + 0.3})`;
+                heart.style.opacity = Math.random() * 0.3 + 0.1;
+                heart.style.fontSize = Math.random() * 10 + 8 + 'px';
+                container.appendChild(heart);
+            }
+        }
+
+        // Image handling
         function handleImageUpload(event) {
             const files = event.target.files;
             const preview = document.getElementById('imagePreview');
             
-            for (const file of files) {
+            Array.from(files).forEach(file => {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const card = document.createElement('div');
                     card.className = 'photo-card relative group';
                     card.innerHTML = `
-                        <div class="relative p-2">
+                        <div class="relative p-2 photo-frame" style="transform: rotate(${Math.random() * 10 - 5}deg)">
                             <img src="${e.target.result}" 
-                                 class="w-full h-48 object-cover rounded-lg shadow-lg border-2 border-white">
+                                 class="w-full h-48 object-cover rounded-lg shadow-lg">
                             <button onclick="this.parentElement.parentElement.remove()" 
                                     class="absolute top-0 right-0 bg-rose-700 text-white 
                                            rounded-full w-6 h-6 flex items-center justify-center 
@@ -201,28 +272,26 @@
                     preview.appendChild(card);
                 }
                 reader.readAsDataURL(file);
-            }
+            });
         }
 
+        // Save letter function
         function saveLetter() {
-            const content = document.getElementById('letterContent').value;
-            if(content.trim()) {
-                const editor = document.querySelector('#editor > div');
-                editor.classList.add('fold-animation');
+            const editorContent = document.getElementById('letterContent');
+            if(editorContent.innerText.trim()) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'parchment-bg rounded-lg overflow-hidden mx-auto relative';
+                wrapper.style.width = '600px';
+                wrapper.style.minHeight = '800px';
 
-                // Create a clone for capturing
+                // Add background hearts
+                addHeartBackground(wrapper);
+
+                // Clone content
                 const clone = document.getElementById('letterContainer').cloneNode(true);
-                clone.style.width = '800px';
-                clone.style.minHeight = '600px';
                 
-                // Replace textarea with div
-                const textDiv = document.createElement('div');
-                textDiv.className = 'handwriting text-xl text-amber-900 whitespace-pre-wrap px-4';
-                textDiv.textContent = content; //preserve line breaks
-                clone.querySelector('textarea').replaceWith(textDiv);
-                
-                // Remove UI elements
-                clone.querySelectorAll('button, label, h2').forEach(el => el.remove());
+                // Only remove specific elements (keep images)
+                clone.querySelectorAll('button, label, h2, .formatting-tools').forEach(el => el.remove());
                 
                 // Add footer
                 const footer = document.createElement('div');
@@ -230,20 +299,27 @@
                 footer.innerHTML = `Crafted with ♥ at chitthi.in`;
                 clone.appendChild(footer);
 
-                document.body.appendChild(clone);
-                
-                html2canvas(clone, {
-                    backgroundColor: '#faf3e0',
-                    scale: 2,
-                    logging: true
-                }).then(canvas => {
-                    capturedCanvas = canvas;
-                    document.body.removeChild(clone);
-                    document.getElementById('downloadSection').classList.remove('hidden');
-                });
+                wrapper.appendChild(clone);
+                document.body.appendChild(wrapper);
+
+                // Add small delay to ensure images load
+                setTimeout(() => {
+                    html2canvas(wrapper, {
+                        backgroundColor: '#faf3e0',
+                        scale: 2,
+                        useCORS: true,
+                        logging: true,
+                        allowTaint: true
+                    }).then(canvas => {
+                        capturedCanvas = canvas;
+                        document.body.removeChild(wrapper);
+                        document.getElementById('downloadSection').classList.remove('hidden');
+                    });
+                }, 500);
             }
         }
 
+        // Download function
         function downloadLetter() {
             if(capturedCanvas) {
                 const link = document.createElement('a');
@@ -253,6 +329,7 @@
             }
         }
 
+        // Share function
         function shareLetter() {
             if (navigator.share && capturedCanvas) {
                 capturedCanvas.toBlob(async (blob) => {
@@ -271,12 +348,10 @@
             }
         }
 
+        // Close download section
         function closeDownloadSection() {
             document.getElementById('downloadSection').classList.add('hidden');
         }
-
-        // Initialize decorative elements
-        window.onload = addDecorativeElements;
     </script>
 </body>
 </html>
